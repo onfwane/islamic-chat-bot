@@ -1,0 +1,22 @@
+{
+  "name": "islamic-chat-bot",
+  "version": "1.0.0",
+  "description": "شات الفتاوى الإسلامية",
+  "main": "src/main.jsx",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "framer-motion": "^10.0.0",
+    "lucide-react": "^0.37.0"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0"
+  },
+  "homepage": "https://onfwane.github.io/islamic-chat-bot"
+}
