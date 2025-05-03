@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مساعد الفتاوى الذكائي</title>
+  <style>
+    body { font-family: Arial; direction: rtl; background: #f0f0f0; padding: 20px; }
+    h2 { color: #333; }
+    textarea { width: 100%; height: 150px; padding: 10px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+    pre { background: #fff; padding: 15px; border: 1px solid #ccc; margin-top: 20px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+
+  <h2>مساعد الفتاوى الذكائي - مجاني بالكامل</h2>
+
+  <textarea id="question" placeholder="اكتب سؤالك الشرعي هنا..."></textarea>
+  <br>
+  <button onclick="askFatwa()">استفسر الآن</button>
+
+  <pre id="response">الرد سيظهر هنا...</pre>
+
+  <script>
+    async function askFatwa() {
+      const input = document.getElementById("question").value;
+      const responseBox = document.getElementById("response");
+      responseBox.innerText = "جارٍ إرسال السؤال...";
+
+      try {
+        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer YOUR_API_KEY_HERE",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "mistralai/mistral-nemo:free",
+            messages: [
+              { role: "system", content: "أجب عن الأسئلة الشرعية وفقًا للقرآن والسنة وآراء العلماء المعتبرين، بدقة وموضوعية." },
+              { role: "user", content: input }
+            ]
+          })
+        });
+
+        const data = await res.json();
+        responseBox.innerText = data.choices?.[0]?.message?.content || "لم يتم الحصول على رد مناسب.";
+      } catch (err) {
+        responseBox.innerText = "حدث خطأ أثناء الاتصال بالخادم.";
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>
